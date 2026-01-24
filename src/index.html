@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title data-i18n="title">Metronome</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="wrap" role="application" aria-label="Metronome">
+    <div class="top-row">
+      <h1 data-i18n="title">Metronome</h1>
+
+      <div class="controls-inline" style="margin-left:auto;display:flex;gap:8px;align-items:center">
+        <div class="lang-select">
+          <label for="lang" class="visually-hidden" data-i18n="langLabel">Language</label>
+          <select id="lang" aria-label="Language selector"></select>
+        </div>
+
+        <div class="theme-select">
+          <label for="theme" class="visually-hidden" data-i18n="themeLabel">Theme</label>
+          <select id="theme" aria-label="Theme selector">
+            <option value="auto">Auto</option>
+            <option value="dark">Dark</option>
+            <option value="light">Light</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="controls" aria-hidden="false">
+      <div>
+        <label for="bpm" data-i18n="bpmLabel">BPM</label>
+        <input id="bpm" type="number" min="20" max="300" value="120" aria-label="BPM input" />
+      </div>
+      <div>
+        <label for="beats" data-i18n="beatsLabel">Beats / Bar</label>
+        <select id="beats" aria-label="Beats per bar">
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4" selected>4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+        </select>
+      </div>
+      <div>
+        <label for="sub" data-i18n="subLabel">Subdivision</label>
+        <select id="sub" aria-label="Subdivision">
+          <option value="1" selected>1 (quarter)</option>
+          <option value="2">2 (eighth)</option>
+          <option value="3">3 (triplet)</option>
+          <option value="4">4 (16th)</option>
+        </select>
+      </div>
+      <div>
+        <label for="volume" data-i18n="volLabel">Volume</label>
+        <input id="volume" type="range" min="0" max="1" step="0.01" value="0.8" aria-label="Volume" />
+      </div>
+    </div>
+
+    <div class="row" style="margin-top:12px;">
+      <button id="start" data-i18n="startBtn">Start</button>
+      <button id="stop" class="secondary" data-i18n="stopBtn">Stop</button>
+      <button id="tap" class="secondary" data-i18n="tapBtn">Tap</button>
+      <div style="margin-left:auto;text-align:right">
+        <div class="tap-hint" id="tapHint" data-i18n="tapHint">Tap tempo: 4 taps to set BPM</div>
+      </div>
+    </div>
+
+    <div class="visual" aria-hidden="false">
+      <div class="meter" id="meter" aria-hidden="true">
+        <div class="dot" id="dot"></div>
+      </div>
+    </div>
+
+    <footer id="footer" data-i18n="footer">works in modern browsers (Chrome/Edge/Firefox/Safari)</footer>
+  </div>
+
+  <script src="i18n.js"></script>
+  <script src="metronome.js"></script>
+</body>
+</html>
