@@ -35,7 +35,7 @@ Built with Electron + Node.js, it is lightweight and fast.
 ## インストール / Installation
 
 ### 1. バイナリ（推奨）
-1. [Releases](https://github.com/your-username/Metronome/releases) から `Metronome.exe` をダウンロード
+1. [Releases](https://github.com/Takkunlego0916/Metronome/releases/) から `Metronome.exe` をダウンロード
 2. 任意のフォルダに保存して実行
 
 ### 2. ソースから
