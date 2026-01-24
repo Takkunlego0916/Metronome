@@ -44,3 +44,19 @@ git clone https://github.com/your-username/Metronome.git
 cd Metronome
 npm install
 npm start
+```
+
+## 使い方 / Usage
+1.アプリを起動
+2.BPMを設定
+3.再生ボタンをクリック
+4.練習や作曲に合わせてリズムを刻む
+
+## ファイル構成 / File Structure
+
+Metronome/
+├─ src/
+├─ icon.ico 
+├─ package.json
+├─ package-lock.json
+└─ README.md
