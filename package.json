@@ -1,0 +1,33 @@
+{
+  "name": "metronome",
+  "version": "1.0.0",
+  "description": "Metronome desktop app",
+  "main": "main.js",
+  "author": "Takkunlego0916",
+  "license": "MIT",
+
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder"
+  },
+
+  "build": {
+    "appId": "com.Takkunlego0916.metronome",
+    "productName": "Metronome",
+    "win": {
+      "target": "nsis",
+      "icon": "icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    }
+  },
+
+  "devDependencies": {
+    "electron": "^30.0.0",
+    "electron-builder": "^24.0.0"
+  }
+}
