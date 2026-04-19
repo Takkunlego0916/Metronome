@@ -1,9 +1,7 @@
-(function(){
+(function () {
   const translations = {
-    "auto": {
-      auto: "Auto"
-    },
-    "en": {
+    auto: { auto: "Auto" },
+    en: {
       title: "Metronome",
       langLabel: "Language",
       themeLabel: "Theme",
@@ -18,9 +16,9 @@
       stopBtn: "Stop",
       tapBtn: "Tap",
       tapHint: "Tap tempo: 4 taps to set BPM",
-      footer: "works in modern browsers (Chrome/Edge/Firefox/Safari)"
+      footer: "works in Windows 10/11"
     },
-    "ja": {
+    ja: {
       title: "メトロノーム",
       langLabel: "言語",
       themeLabel: "テーマ",
@@ -35,7 +33,7 @@
       stopBtn: "停止",
       tapBtn: "タップ",
       tapHint: "タップテンポ：4回タップでBPMを設定",
-      footer: "最新ブラウザで動作します（Chrome/Edge/Firefox/Safari）"
+      footer: "Windows 10/11で動作します"
     },
     "zh-Hans": {
       title: "节拍器",
@@ -52,7 +50,7 @@
       stopBtn: "停止",
       tapBtn: "拍击",
       tapHint: "拍击节拍：拍击4次以设置BPM",
-      footer: "在现代浏览器中可用（Chrome/Edge/Firefox/Safari）"
+      footer: "适用于 Windows 10/11"
     },
     "zh-Hant": {
       title: "節拍器",
@@ -69,9 +67,9 @@
       stopBtn: "停止",
       tapBtn: "拍擊",
       tapHint: "拍擊節拍：拍擊4次以設定BPM",
-      footer: "在現代瀏覽器中可用（Chrome/Edge/Firefox/Safari）"
+      footer: "適用於 Windows 10/11"
     },
-    "ko": {
+    ko: {
       title: "메트로놈",
       langLabel: "언어",
       themeLabel: "테마",
@@ -86,9 +84,9 @@
       stopBtn: "정지",
       tapBtn: "탭",
       tapHint: "탭 템포: 4회 탭하여 BPM 설정",
-      footer: "최신 브라우저에서 작동합니다 (Chrome/Edge/Firefox/Safari)"
+      footer: "Windows 10/11에서 작동합니다"
     },
-    "es": {
+    es: {
       title: "Metrónomo",
       langLabel: "Idioma",
       themeLabel: "Tema",
@@ -103,9 +101,9 @@
       stopBtn: "Detener",
       tapBtn: "Tap",
       tapHint: "Tap tempo: 4 toques para ajustar BPM",
-      footer: "funciona en navegadores modernos (Chrome/Edge/Firefox/Safari)"
+      footer: "funciona en Windows 10/11"
     },
-    "fr": {
+    fr: {
       title: "Métronome",
       langLabel: "Langue",
       themeLabel: "Thème",
@@ -120,9 +118,9 @@
       stopBtn: "Arrêter",
       tapBtn: "Tap",
       tapHint: "Tap tempo : 4 taps pour définir le BPM",
-      footer: "fonctionne dans les navigateurs modernes (Chrome/Edge/Firefox/Safari)"
+      footer: "fonctionne sous Windows 10/11"
     },
-    "de": {
+    de: {
       title: "Metronom",
       langLabel: "Sprache",
       themeLabel: "Design",
@@ -137,7 +135,7 @@
       stopBtn: "Stopp",
       tapBtn: "Tap",
       tapHint: "Tap-Tempo: 4 Taps zum Einstellen des BPM",
-      footer: "funktioniert in modernen Browsern (Chrome/Edge/Firefox/Safari)"
+      footer: "funktioniert unter Windows 10/11"
     },
     "pt-BR": {
       title: "Metrônomo",
@@ -154,9 +152,9 @@
       stopBtn: "Parar",
       tapBtn: "Tap",
       tapHint: "Tap tempo: 4 toques para definir o BPM",
-      footer: "funciona em navegadores modernos (Chrome/Edge/Firefox/Safari)"
+      footer: "funciona no Windows 10/11"
     },
-    "ru": {
+    ru: {
       title: "Метроном",
       langLabel: "Язык",
       themeLabel: "Тема",
@@ -171,9 +169,9 @@
       stopBtn: "Стоп",
       tapBtn: "Тап",
       tapHint: "Tap tempo: 4 нажатия для установки BPM",
-      footer: "работает в современных браузерах (Chrome/Edge/Firefox/Safari)"
+      footer: "работает в Windows 10/11"
     },
-    "it": {
+    it: {
       title: "Metronomo",
       langLabel: "Lingua",
       themeLabel: "Tema",
@@ -188,9 +186,9 @@
       stopBtn: "Ferma",
       tapBtn: "Tap",
       tapHint: "Tap tempo: 4 tocchi per impostare il BPM",
-      footer: "funziona nei browser moderni (Chrome/Edge/Firefox/Safari)"
+      footer: "funziona su Windows 10/11"
     },
-    "nl": {
+    nl: {
       title: "Metronoom",
       langLabel: "Taal",
       themeLabel: "Thema",
@@ -205,85 +203,130 @@
       stopBtn: "Stop",
       tapBtn: "Tap",
       tapHint: "Tap tempo: 4 taps om BPM in te stellen",
-      footer: "werkt in moderne browsers (Chrome/Edge/Firefox/Safari)"
+      footer: "werkt in Windows 10/11"
     }
   };
 
-  const STORAGE_KEY = 'metronome_lang';
-  const available = Object.keys(translations).filter(k => k !== 'auto');
+  const STORAGE_KEY = "metronome_lang";
+  const available = Object.keys(translations).filter(k => k !== "auto");
+
+  let selectedLang = "auto";
+  let effectiveLang = "en";
+
+  function normalizeLangTag(tag) {
+    return String(tag || "en").trim().replace("_", "-").toLowerCase();
+  }
 
   function getSaved() {
-    try { return localStorage.getItem(STORAGE_KEY); } catch(e){ return null; }
+    try {
+      return localStorage.getItem(STORAGE_KEY);
+    } catch (e) {
+      return null;
+    }
   }
+
   function save(lang) {
-    try { localStorage.setItem(STORAGE_KEY, lang); } catch(e){}
+    try {
+      localStorage.setItem(STORAGE_KEY, lang);
+    } catch (e) {}
   }
 
   function resolveFromNavigator() {
-    const nav = navigator.language || navigator.userLanguage || 'en';
-    if (nav.startsWith('zh-TW') || nav.startsWith('zh-HK') || nav.startsWith('zh-Hant')) return 'zh-Hant';
-    if (nav.startsWith('zh')) return 'zh-Hans';
-    if (nav.startsWith('pt-BR')) return 'pt-BR';
-    const base = nav.split('-')[0];
-    if (available.includes(nav)) return nav;
-    if (available.includes(base)) return base;
-    return 'en';
+    const nav = normalizeLangTag(navigator.language || navigator.userLanguage || "en");
+    const map = Object.fromEntries(available.map(code => [code.toLowerCase(), code]));
+
+    if (nav.startsWith("zh-tw") || nav.startsWith("zh-hk") || nav.startsWith("zh-hant")) return "zh-Hant";
+    if (nav.startsWith("zh")) return "zh-Hans";
+    if (nav.startsWith("pt-br")) return "pt-BR";
+
+    const base = nav.split("-")[0];
+    return map[nav] || map[base] || "en";
+  }
+
+  function getDictionary(lang) {
+    return translations[lang] || translations.en;
   }
 
   function apply(lang) {
-    const effective = (lang === 'auto' || !lang) ? resolveFromNavigator() : lang;
-    const dict = translations[effective] || translations['en'];
-    document.querySelectorAll('[data-i18n]').forEach(node => {
-      const key = node.getAttribute('data-i18n');
+    selectedLang = lang === "auto" || !lang ? "auto" : lang;
+    effectiveLang = selectedLang === "auto" ? resolveFromNavigator() : selectedLang;
+
+    const dict = getDictionary(effectiveLang);
+
+    document.querySelectorAll("[data-i18n]").forEach(node => {
+      const key = node.getAttribute("data-i18n");
       if (!key) return;
-      if (node.tagName.toLowerCase() === 'title') {
-        node.textContent = dict[key] || node.textContent;
-      } else {
-        node.textContent = dict[key] || node.textContent;
+      if (dict[key]) {
+        node.textContent = dict[key];
       }
     });
-    const htmlLang = (effective === 'zh-Hant') ? 'zh-Hant' : (effective === 'zh-Hans' ? 'zh' : effective);
+
+    const htmlLang =
+      effectiveLang === "zh-Hant"
+        ? "zh-Hant"
+        : effectiveLang === "zh-Hans"
+          ? "zh"
+          : effectiveLang;
+
     document.documentElement.lang = htmlLang;
-    save(lang);
+    save(selectedLang);
   }
 
   function init(selectEl) {
     if (!selectEl) return;
-    const optAuto = document.createElement('option');
-    optAuto.value = 'auto';
-    optAuto.textContent = translations['en'].auto || 'Auto';
+
+    const optAuto = document.createElement("option");
+    optAuto.value = "auto";
+    optAuto.textContent = translations.en.auto || "Auto";
     selectEl.appendChild(optAuto);
 
     const labelMap = {
-      "en":"English","ja":"日本語","zh-Hans":"简体中文","zh-Hant":"繁體中文","ko":"한국어",
-      "es":"Español","fr":"Français","de":"Deutsch","pt-BR":"Português (BR)","ru":"Русский",
-      "it":"Italiano","nl":"Nederlands"
+      en: "English",
+      ja: "日本語",
+      "zh-Hans": "简体中文",
+      "zh-Hant": "繁體中文",
+      ko: "한국어",
+      es: "Español",
+      fr: "Français",
+      de: "Deutsch",
+      "pt-BR": "Português (BR)",
+      ru: "Русский",
+      it: "Italiano",
+      nl: "Nederlands"
     };
+
     available.forEach(code => {
-      const opt = document.createElement('option');
+      const opt = document.createElement("option");
       opt.value = code;
       opt.textContent = labelMap[code] || code;
       selectEl.appendChild(opt);
     });
 
     const saved = getSaved();
-    const initial = saved || 'auto';
+    const initial = saved || "auto";
     selectEl.value = initial;
     apply(initial);
 
-    selectEl.addEventListener('change', (e) => {
+    selectEl.addEventListener("change", (e) => {
       apply(e.target.value);
-      if (e.target.value === 'auto') {
-        apply('auto');
-      }
     });
 
-    if ('onlanguagechange' in window) {
-      window.addEventListener('languagechange', () => {
-        if (selectEl.value === 'auto') apply('auto');
+    if ("onlanguagechange" in window) {
+      window.addEventListener("languagechange", () => {
+        if (selectEl.value === "auto") {
+          apply("auto");
+        }
       });
     }
   }
 
-  window.I18n = { init, apply, getAvailable: () => available.slice(), translations };
+  window.I18n = {
+    init,
+    apply,
+    getAvailable: () => available.slice(),
+    getSelected: () => selectedLang,
+    getEffective: () => effectiveLang,
+    getDictionary,
+    translations
+  };
 })();
